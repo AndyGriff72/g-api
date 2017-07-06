@@ -14,3 +14,12 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+//  Get single recipe and recipes by cuisine.
+Route::get('/recipe/get/{id}', 'RecipeController@getRecipe');
+Route::get('/recipe/cuisine/{cuisine}/{page?}', 'RecipeController@getRecipesByCuisine');
+
+//  Rate, update and create.
+Route::post('/recipe/rate', 'RecipeController@rateRecipe');
+Route::post('/recipe/update/{id}', 'RecipeController@updateRecipe');
+Route::post('/recipe/new', 'RecipeController@createNewRecipe');
