@@ -3,7 +3,7 @@
 ## How to use
 There are five routes to access the functions as follows:
 
-###/recipe/get
+### /recipe/get
 
 **Parameters (GET)**
 
@@ -13,7 +13,7 @@ id  The ID of the recipe whose data is to be retrieved.
 
 A JSON-encoded object containing the recipe data.
 
-###/recipe/cuisine
+### /recipe/cuisine
 
 **Parameters (GET)**
 
@@ -25,7 +25,7 @@ page  The page within the data set to retrieve. (For testing purposes, the page 
 
 A JSON-encoded object containing the recipes matching the specified cuisine.
 
-###/recipe/rate
+### /recipe/rate
 
 **Parameters (POST)**
 
@@ -37,13 +37,13 @@ rating  The rating from 1 to 5.
 
 Outputs "true" if operation successful.
 
-###/recipe/update
+### /recipe/update
 
 **Parameters (POST)**
 
 Any or all of the properties of each recipe may be set. Must specify a valid, existing "id" value or an exception will be thrown. Any properties not already present on the recipe will be ignored (e.g. trying to set a property "salt_grams" will be ignored as it isn't already set.)
 
-###/recipe/new
+### /recipe/new
 
 **Parameters (POST)**
 
