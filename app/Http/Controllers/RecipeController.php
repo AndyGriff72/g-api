@@ -43,11 +43,17 @@ class RecipeController extends Controller
     /**
      * Returns a JSON-encoded object containing the specified recipe data.
      *
-     * @param int $id The ID of the recipe to retrieve.
+     * @param Request $request The Request object containing the submitted GET data.
      * @return void
      */
-    public function getRecipe($id)
+    public function getRecipe(Request $request)
     {
+        //  Check ID was supplied.
+        $id = $request->input('id');
+        if (!$id) {
+            throw new InvalidArgumentException('"id" GET parameter missing.');
+        }
+
         //  Validate recipe ID.
         if (!$recipe = $this->csvData->where('id', '=', $id)->first()) {
             abort(404, 'The specified recipe could not be found.');
@@ -60,12 +66,20 @@ class RecipeController extends Controller
     /**
      * Get all recipes for the specified cuisine and returns as JSON-encoded object.
      *
-     * @param string $cuisine Recipe cuisine filter.
-     * @param int $page Page within record set.
+     * @param Request $request The Request object containing the submitted GET data.
      * @return void
      */
-    public function getRecipesByCuisine($cuisine, $page = 1)
+    public function getRecipesByCuisine(Request $request)
     {
+        //  Initialize variables from GET data. (Default to page 1 if not supplied.)
+        $cuisine = $request->input('cuisine');
+        $page = $request->input('page', 1);
+
+        //  Check 'cuisine' variable was supplied.
+        if (!$cuisine) {
+            throw new InvalidArgumentException('"id" GET parameter missing.');
+        }
+
         //  Get matching recipes. If none found, redirect to 404 page.
         if (!$recipes = $this->csvData->where('recipe_cuisine', '=', $cuisine)->forPage($page, static::PAGE_LENGTH)->all()) {
             abort(404, 'No recipes found for the specified cuisine type.');
@@ -141,7 +155,7 @@ class RecipeController extends Controller
          * @var string $key The key of the POST variable being processed
          * @var mixed $val The value to be entered into the data element for the above key.
          */
-        foreach ($request->except('id') as $key => $val) {
+        foreach ($request->except(['id', '_token']) as $key => $val) {
             //  Update process so we should check key exists.
             if (array_key_exists($key, $recipe)) {
                 $recipe[$key] = $val;
@@ -174,7 +188,7 @@ class RecipeController extends Controller
          * @var string $key The key of the POST variable being processed
          * @var mixed $val The value to be entered into the data element for the above key.
          */
-        foreach ($request->except('id') as $key => $val) {
+        foreach ($request->except(['id', '_token']) as $key => $val) {
             $newRecipe[$key] = $val;
         }
 

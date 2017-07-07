@@ -15,11 +15,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/test/test', 'TestController@test');
+
 //  Get single recipe and recipes by cuisine.
-Route::get('/recipe/get/{id}', 'RecipeController@getRecipe');
-Route::get('/recipe/cuisine/{cuisine}/{page?}', 'RecipeController@getRecipesByCuisine');
+Route::get('/recipe/get', 'RecipeController@getRecipe');
+Route::get('/recipe/cuisine', 'RecipeController@getRecipesByCuisine');
 
 //  Rate, update and create.
 Route::post('/recipe/rate', 'RecipeController@rateRecipe');
-Route::post('/recipe/update/{id}', 'RecipeController@updateRecipe');
-Route::post('/recipe/new', 'RecipeController@createNewRecipe');
+Route::post('/recipe/update', 'RecipeController@updateRecipe');
+Route::post('/recipe/new', 'RecipeController@storeNewRecipe');
