@@ -179,7 +179,7 @@ class RecipeController extends Controller
     public function storeNewRecipe(Request $request)
     {
         //  Get next ID by adding one to the current max value of existing IDs.
-        $newId = $this->csvData->max('id');
+        $newId = $this->csvData->max('id') + 1;
 
         //  Initialize new recipe associative array.
         $newRecipe = ['id' => $newId];
